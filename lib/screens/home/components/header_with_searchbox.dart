@@ -40,7 +40,7 @@ class HeaderWithSearchBox extends StatelessWidget {
                 ),
                 Spacer(),
                 CircleAvatar( //foto profile
-                  backgroundImage: AssetImage("assets/images/dd.jpg"),
+                  backgroundImage: AssetImage("assets/images/dd.jpg"), minRadius: 25,maxRadius: 28,
                 ),
               ],
             ),
