@@ -75,7 +75,15 @@ class InformationCard extends StatelessWidget {
         bottom: 20 * 2.5
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10)
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 8,
+            spreadRadius: 4,
+            offset: Offset(0, 10),
+          ),
+        ],
       ),
       width: size.width * 0.8,
       child: Column(
@@ -86,8 +94,7 @@ class InformationCard extends StatelessWidget {
               topLeft: Radius.circular(10), 
               topRight: Radius.circular(10)
             ),
-            child: Image.asset(image, height: 200, fit: BoxFit.fill),
-            
+            child: Image.asset(image, height: 200, fit: BoxFit.fill),  
           ),
 
           Container(

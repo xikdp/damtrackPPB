@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HeaderWithSearchBox extends StatelessWidget {
+class HeaderWithSearchBox extends StatefulWidget {
   const HeaderWithSearchBox({
     Key? key,
     required this.size,
@@ -10,10 +13,19 @@ class HeaderWithSearchBox extends StatelessWidget {
   final Size size;
 
   @override
+  State<HeaderWithSearchBox> createState() => _HeaderWithSearchBoxState();
+}
+
+class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
+  // final TextEditingController NameController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
+    // FirebaseFirestore firestore = FirebaseFirestore.instance;
+    // CollectionReference users = firestore.collection('users');
+    
     return Container(
       margin: EdgeInsets.only(bottom: 20 * 2.5),
-      height: size.height * 0.25,
+      height: widget.size.height * 0.25,
       child: Stack(
         children: <Widget>[
           Container(
@@ -22,7 +34,7 @@ class HeaderWithSearchBox extends StatelessWidget {
               right: 20,
               bottom: 36 + 20
             ),
-            height: size.height * 0.25 - 27,
+            height: widget.size.height * 0.25 - 27,
             decoration: BoxDecoration( //background atas
               color: Colors.amber,
               borderRadius: BorderRadius.only(
@@ -32,12 +44,21 @@ class HeaderWithSearchBox extends StatelessWidget {
             ),
             child: Row(
               children: <Widget>[
+                // RaisedButton(onPressed: () {
+                //   users.add({
+                //     'name': NameController.text
+                //   });
+
+                //   NameController.text = '';
+                // }, child: Text("Tes Tambah users"),),
+
                 Text( //teks menyapa
                   "Hi Smith !",
                   style: Theme.of(context).textTheme.headline5?.copyWith(
                     color: Colors.white, fontWeight: FontWeight.bold
                   ),
                 ),
+                // Text(NameController.text),
                 Spacer(),
                 CircleAvatar( //foto profile
                   backgroundImage: AssetImage("assets/images/dd.jpg"), minRadius: 25,maxRadius: 28,
@@ -65,6 +86,7 @@ class HeaderWithSearchBox extends StatelessWidget {
                   ),
                 ],
               ),
+              
               child: TextField( //search box
                 decoration: InputDecoration(
                   hintText: "Search",
@@ -75,7 +97,12 @@ class HeaderWithSearchBox extends StatelessWidget {
                   focusedBorder: InputBorder.none,
                   suffixIcon: Icon(Icons.search, color: Colors.amber)
                 ),
+                // onChanged: (value) {
+                //   setState( () {} );
+                // },
+                // controller: NameController,
               ),
+              // Text(controller.text),
             ),
           ),
         ],

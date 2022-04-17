@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "295585434190",
+    "project_id": "damtrack-9cc83",
+    "storage_bucket": "damtrack-9cc83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295585434190:android:25c6b0f62f706693ca911f",
+        "android_client_info": {
+          "package_name": "com.example.damtrack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295585434190-1plt0u2fvqmjee63e0ovoktmt0hqnt5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAStkKtN1i_5IZz6lNefj1KmemYzlWgpbs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295585434190-1plt0u2fvqmjee63e0ovoktmt0hqnt5f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

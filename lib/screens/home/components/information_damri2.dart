@@ -71,10 +71,18 @@ class InformationCard2 extends StatelessWidget {
         left: 20/2,
         right: 20/2,
         top: 20/2,
-        bottom: 20 * 2.5
+        bottom: 10 * 2.5
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10)
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 8,
+            spreadRadius: 4,
+            offset: Offset(0, 10),
+          ),
+        ],
       ),
       width: size.width * 0.8,
       child: Column(
