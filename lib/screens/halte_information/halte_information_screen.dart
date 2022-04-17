@@ -1,10 +1,9 @@
-import 'package:damtrack/screens/home/components/body.dart';
+import 'package:damtrack/components/bottom_navbar.dart';
+import 'package:damtrack/screens/halte_information/components/body.dart';
 import 'package:flutter/material.dart';
 
-import '../../components/bottom_navbar.dart';
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({ Key? key }) : super(key: key);
+class HalteInformation extends StatelessWidget {
+  const HalteInformation({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

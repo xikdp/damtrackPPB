@@ -1,4 +1,4 @@
-import 'package:damtrack/detail_information/detail_information_screens.dart';
+import 'package:damtrack/screens/detail_information/detail_information_screens.dart';
 import 'package:flutter/material.dart';
 
 class InformationDamri extends StatelessWidget {
