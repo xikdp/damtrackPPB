@@ -3,31 +3,11 @@ import 'package:damtrack/screens/profile/profile_page.dart';
 import 'package:damtrack/screens/home/home_screens.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'screens/home/components/header_with_searchbox.dart';
 
 void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
   runApp(testinggan());
 }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Damtrack',
-//       theme: ThemeData(
-//         // scaffoldBackgroundColor: Color.fromARGB(255, 255, 220, 65),
-//         primarySwatch: Colors.amber,
-//         visualDensity: VisualDensity.adaptivePlatformDensity,
-//       ),
-//       home: HomeScreen(),
-//     );
-//   }
-// }
 class testinggan extends StatelessWidget {  
   @override  
   Widget build(BuildContext context) {  
