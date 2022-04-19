@@ -23,7 +23,7 @@ class halte_information_card extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child:Container(
-                      height: 100,
+                      height: 150,
                       child: Row(
                         children: [
                           Center(
@@ -96,7 +96,18 @@ class halte_information_card extends StatelessWidget {
                                         ],
                                       ),
                                     )
-                                  )
+                                  ),
+                                  Spacer(),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                      left: 250,
+                                    ),
+                                    child: FlatButton( //COTS I Komang Danda Priyowittesa - Menambah fitur tombol favorite
+                                        onPressed: () {
+                                        },
+                                        child: Icon(Icons.favorite_outline_outlined, color:Colors.black54),
+                                      ),
+                                  ),
                                 ],
                               ),
                             ),
