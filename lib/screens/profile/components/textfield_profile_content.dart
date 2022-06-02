@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class textfield_profile_content extends StatelessWidget {
   const textfield_profile_content({
@@ -126,6 +129,24 @@ class textfield_profile_content extends StatelessWidget {
                       child: Center(
                         child: Text(
                           "Confirm Update",
+                          style: TextStyle(fontSize: 23, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Container(
+                    height: 55,
+                    width: double.infinity,
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      onPressed: () => FirebaseAuth.instance.signOut(),
+                      color: Colors.amber,
+                      child: Center(
+                        child: Text(
+                          "Logout",
                           style: TextStyle(fontSize: 23, color: Colors.white),
                         ),
                       ),

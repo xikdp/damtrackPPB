@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HeaderWithSearchBox extends StatefulWidget {
   const HeaderWithSearchBox({
@@ -17,11 +17,10 @@ class HeaderWithSearchBox extends StatefulWidget {
 }
 
 class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
-  // final TextEditingController NameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    // FirebaseFirestore firestore = FirebaseFirestore.instance;
-    // CollectionReference users = firestore.collection('users');
+    final user = FirebaseAuth.instance.currentUser!;
+    final callUser = user.email!;
     
     return Container(
       margin: EdgeInsets.only(bottom: 20 * 2.5),
@@ -44,21 +43,12 @@ class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
             ),
             child: Row(
               children: <Widget>[
-                // RaisedButton(onPressed: () {
-                //   users.add({
-                //     'name': NameController.text
-                //   });
-
-                //   NameController.text = '';
-                // }, child: Text("Tes Tambah users"),),
-
                 Text( //teks menyapa
-                  "Hi Smith !",
-                  style: Theme.of(context).textTheme.headline5?.copyWith(
+                  'Hi $callUser',
+                  style: Theme.of(context).textTheme.headline6?.copyWith(
                     color: Colors.white, fontWeight: FontWeight.bold
                   ),
                 ),
-                // Text(NameController.text),
                 Spacer(),
                 CircleAvatar( //foto profile
                   backgroundImage: AssetImage("assets/images/dd.jpg"), minRadius: 25,maxRadius: 28,
@@ -97,12 +87,7 @@ class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
                   focusedBorder: InputBorder.none,
                   suffixIcon: Icon(Icons.search, color: Colors.amber)
                 ),
-                // onChanged: (value) {
-                //   setState( () {} );
-                // },
-                // controller: NameController,
               ),
-              // Text(controller.text),
             ),
           ),
         ],

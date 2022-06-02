@@ -1,7 +1,10 @@
 import 'package:damtrack/main_page.dart';
 import 'package:damtrack/screens/home/home_screens.dart';
 import 'package:damtrack/screens/sign_up/SignUpPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../../main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -11,7 +14,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController EmailController = TextEditingController();
+  final TextEditingController PassController = TextEditingController();
+
   @override
+  void dispose(){
+    EmailController.dispose();
+    PassController.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -87,6 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     filled: true,
                                   ),
+                                  controller: EmailController,
                                 ),
                               ],
                             ),
@@ -125,6 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     filled: true,
                                   ),
+                                  controller: PassController,
                                 ),
                               ],
                             ),
@@ -164,15 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    testinggan(), //harusnya masuk ke homepage
-                              ),
-                            );
-                          },
+                          onTap: signIn,
                           child: Text(
                             'Login',
                             style: TextStyle(
@@ -359,46 +365,28 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              // Positioned(
-              //   top: 40,
-              //   left: 0,
-              //   child: InkWell(
-              //     onTap: () {
-              //       Navigator.pop(context);
-              //     },
-              //     child: Container(
-              //       padding: EdgeInsets.symmetric(
-              //         horizontal: 10,
-              //       ),
-              //       child: Row(
-              //         children: <Widget>[
-              //           Container(
-              //             padding: EdgeInsets.only(
-              //               left: 0,
-              //               top: 10,
-              //               bottom: 10,
-              //             ),
-              //             child: Icon(
-              //               Icons.keyboard_arrow_left,
-              //               color: Colors.black,
-              //             ),
-              //           ),
-              //           Text(
-              //             'Back',
-              //             style: TextStyle(
-              //               fontSize: 15,
-              //               fontWeight: FontWeight.w500,
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
       ),
     );
+  }
+  Future signIn() async {
+    showDialog(
+      context: context, 
+      barrierDismissible: false, 
+      builder: (context) => Center(child: CircularProgressIndicator())
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword (
+        email: EmailController.text.trim(), 
+        password: PassController.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }

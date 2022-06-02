@@ -1,5 +1,12 @@
 import 'package:damtrack/screens/sign_in/LoginPage.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../main.dart';
+// import 'package:firebasetest/services/auth_services.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key, this.title}) : super(key: key);
@@ -11,7 +18,19 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController NameController = TextEditingController();
+  final TextEditingController EmailController = TextEditingController();
+  final TextEditingController PassController = TextEditingController();
+  final TextEditingController ConfirmPassController = TextEditingController();
+
   @override
+  void dispose() {
+    NameController.dispose();
+    EmailController.dispose();
+    PassController.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -81,6 +100,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     ),
                                     filled: true,
                                   ),
+                                  controller: NameController,
                                 ),
                               ],
                             ),
@@ -124,6 +144,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     ),
                                     filled: true,
                                   ),
+                                  controller: EmailController,
                                 ),
                               ],
                             ),
@@ -167,6 +188,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     ),
                                     filled: true,
                                   ),
+                                  controller: PassController,
                                 ),
                               ],
                             ),
@@ -210,6 +232,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     ),
                                     filled: true,
                                   ),
+                                  controller: ConfirmPassController,
                                 ),
                               ],
                             ),
@@ -251,12 +274,11 @@ class _SignUpPageState extends State<SignUpPage> {
                             ],
                           ),
                         ),
-                        child: Text(
-                          'Sign Up',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
+                        child: InkWell(
+                          onTap: signUp,
+                          child: new Text("Sign Up",
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.white)),
                         ),
                       ),
                       SizedBox(
@@ -306,53 +328,79 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
               ),
-              Positioned(
-                top: 40,
-                left: 0,
-                child: InkWell(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(
-                            left: 0,
-                            top: 10,
-                            bottom: 10,
-                          ),
-                          child: Icon(
-                            Icons.arrow_left,
-                            color: Colors.black,
-                            size: 30,
-                          ),
-                        ),
-                        InkWell(
-                          child: Text(
-                            'Back',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => LoginPage(),
-                            ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future signUp() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference users = firestore.collection('users');
+
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: EmailController.text.trim(),
+        password: PassController.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+
+    User? uidUser = FirebaseAuth.instance.currentUser;
+
+    
+
+    if (PassController.text == ConfirmPassController.text) {
+      signUp;
+      await FirebaseFirestore.instance.collection("users").doc(uidUser?.uid).set({
+        'name': NameController.text,
+        'email': EmailController.text,
+        'password': PassController.text,
+        'uid': uidUser?.uid
+      });
+
+      NameController.text = '';
+      EmailController.text = '';
+      PassController.text = '';
+
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Successfully Sign Up !'),
+          content: const Text('Login for access app !'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  )),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Your Password not Matching'),
+          content: const Text('Match your password first'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SignUpPage(),
+                  )),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+
   }
 }
