@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-class halte_information_card extends StatelessWidget {
-  const halte_information_card({
-    Key? key, required this.icon, required this.title, required this.subtitle1, required this.subtitle2, //this.press,
+class ScheduleCard extends StatelessWidget {
+  const ScheduleCard({Key? key, required this.icon, required this.namaDamri, required this.platDamri, required this.jalurDamri, required this.jamOperasional, //this.press,
   }) : super(key: key);
-
-  final String icon, title, subtitle1, subtitle2;
-  // final VoidCallback? press;
+  
+  final String icon, namaDamri, platDamri, jalurDamri, jamOperasional;
 
   @override
   Widget build(BuildContext context) {
@@ -15,15 +13,14 @@ class halte_information_card extends StatelessWidget {
       margin: EdgeInsets.only(
         top: 20/2,
       ),
-      // color: Color.fromARGB(255, 228, 228, 228),
       child: Column(
         children: <Widget>[
-              Card( //card-1
+              Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child:Container(
-                      height: 150,
+                      height: 115,
                       child: Row(
                         children: [
                           Center(
@@ -34,28 +31,28 @@ class halte_information_card extends StatelessWidget {
                                     Padding(padding: EdgeInsets.only(
                                       top: 15,
                                     )),
-                                    Image.asset(icon, width: 40, height: 40,),
+                                    Image.asset(icon, width: 45, height: 45,),
                                 ],
                               ),
                             ),
                           ),
                           Expanded(
                             child:Container(
-                              alignment: Alignment.topLeft,
+                              alignment: Alignment.center,
                               child: Column(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.symmetric(vertical: 5.0),
-                                    alignment: Alignment.topLeft,
+                                    margin: EdgeInsets.symmetric(vertical: 12.0),
+                                    alignment: Alignment.centerLeft,
                                     child: RichText(
                                       text: TextSpan(
                                         children: [
                                           TextSpan(
-                                            text: "$title",
+                                            text: "$namaDamri",
                                             style: TextStyle(
                                               color: Colors.black.withOpacity(0.8),
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 20
+                                              fontSize: 18
                                             )
                                           ),
                                         ],
@@ -63,13 +60,12 @@ class halte_information_card extends StatelessWidget {
                                     )
                                   ),
                                   Container(
-                                    // flex: 5, //if expanded
-                                    alignment: Alignment.topLeft,
+                                    alignment: Alignment.centerLeft,
                                     child: RichText(
                                       text: TextSpan(
                                         children:  [
                                           TextSpan(
-                                            text: "$subtitle1",
+                                            text: "$platDamri",
                                             style: TextStyle(
                                               color: Colors.grey,
                                               fontWeight: FontWeight.w500,
@@ -81,12 +77,29 @@ class halte_information_card extends StatelessWidget {
                                     )
                                   ),
                                   Container(
-                                    alignment: Alignment.topLeft,
+                                    alignment: Alignment.centerLeft,
                                     child: RichText(
                                       text: TextSpan(
                                         children: [
                                           TextSpan(
-                                            text: "$subtitle2",
+                                            text: "$jalurDamri",
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15
+                                            )
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ),
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: "$jamOperasional",
                                             style: TextStyle(
                                               color: Colors.grey,
                                               fontWeight: FontWeight.w500,
@@ -107,7 +120,6 @@ class halte_information_card extends StatelessWidget {
                     elevation: 10,
                     margin: EdgeInsets.all(10),
                   ),
-
         ],
       ), 
     );

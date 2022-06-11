@@ -1,6 +1,7 @@
 import 'package:damtrack/screens/halte_information/halte_information_screen.dart';
 import 'package:damtrack/screens/profile/profile_page.dart';
 import 'package:damtrack/screens/home/home_screens.dart';
+import 'package:damtrack/screens/schedule/schedule_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -25,7 +26,7 @@ class testinggan extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               children: [
                 HomeScreen(),
-                Container(child: Icon(Icons.directions_bike)),
+                SchedulePage(),
                 HalteInformation(),
                 Profile(),
               ],

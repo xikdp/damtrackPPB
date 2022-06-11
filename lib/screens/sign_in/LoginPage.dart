@@ -16,9 +16,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController EmailController = TextEditingController();
   final TextEditingController PassController = TextEditingController();
+  bool isHiddenPswrd = true;
 
   @override
-  void dispose(){
+  void dispose() {
     EmailController.dispose();
     PassController.dispose();
     super.dispose();
@@ -120,12 +121,15 @@ class _LoginPageState extends State<LoginPage> {
                                   height: 10,
                                 ),
                                 TextField(
-                                  obscureText: true,
+                                  obscureText: isHiddenPswrd,
                                   decoration: InputDecoration(
                                     hintText: "Masukkan password",
-                                    suffixIcon: Icon(
-                                      Icons.visibility,
-                                      color: Colors.black54,
+                                    suffixIcon: InkWell(
+                                      onTap: _togglePasswordView,
+                                      child: Icon(
+                                        Icons.visibility,
+                                        color: Colors.black54,
+                                      ),
                                     ),
                                     // icon: Icon(Icons.lock),
                                     border: OutlineInputBorder(
@@ -343,7 +347,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               InkWell(
                                 child: Text(
-                                'Register here',
+                                  'Register here',
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 108, 3, 246),
                                     fontSize: 13,
@@ -351,7 +355,9 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
                                       builder: (context) => SignUpPage(),
                                     ),
                                   );
@@ -371,16 +377,26 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  void _togglePasswordView() {
+    setState(() {
+      isHiddenPswrd = !isHiddenPswrd;
+    });
+    // if (isHiddenPswrd == true) {
+    //  isHiddenPswrd = false;
+    //} else {
+    //isHiddenPswrd = true;
+  }
+
   Future signIn() async {
     showDialog(
-      context: context, 
-      barrierDismissible: false, 
-      builder: (context) => Center(child: CircularProgressIndicator())
-    );
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(child: CircularProgressIndicator()));
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword (
-        email: EmailController.text.trim(), 
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: EmailController.text.trim(),
         password: PassController.text.trim(),
       );
     } on FirebaseAuthException catch (e) {
