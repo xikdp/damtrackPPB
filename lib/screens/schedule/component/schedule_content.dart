@@ -1,52 +1,44 @@
+// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'schedule_card.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ScheduleContent extends StatelessWidget{
   const ScheduleContent({
     Key? key,
   }) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-         ScheduleCard(
-          icon: "assets/icons/damri.png",
-          namaDamri: "Bus Damri Mawar",
-          platDamri: "Plat : D 4213 UCA",
-          jalurDamri: "Jalur : Leuwi Panjang - Buah Batu",
-          jamOperasional: "Jam Operasional : 09.00 - 19.00 WIB",
+
+    return Scaffold (
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('schedule').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if(!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return ListView(
+            children: snapshot.data!.docs.map((document) {
+              return Center(
+                child: ScheduleCard(
+                  icon: "assets/icons/damri.png", 
+                  namaDamri: "Bus ${document['namadamri']}", 
+                  platDamri: "Plat : ${document['platdamri']}", 
+                  jalurDamri: "Jalur : ${document['jalurdamri']}", 
+                  jamOperasional: "Jam Operasional : ${document['jamoperasional']}"
+                ),
+              );
+            }).toList(),
+          );
+        }
         ),
-         ScheduleCard(
-          icon: "assets/icons/damri.png",
-          namaDamri: "Bus Damri Ichsan",
-          platDamri: "Plat : D 4000 ICN",
-          jalurDamri: "Jalur : Baleendah - Pasteur",
-          jamOperasional: "Jam Operasional : 09.00 - 21.00 WIB",
-        ),
-        ScheduleCard(
-          icon: "assets/icons/damri.png",
-          namaDamri: "Bus Damri Komang",
-          platDamri: "Plat : D 1232 KMG",
-          jalurDamri: "Jalur : Situsaeur - Braga",
-          jamOperasional: "Jam Operasional : 09.00 - 17.00 WIB",
-        ),
-        ScheduleCard(
-          icon: "assets/icons/damri.png",
-          namaDamri: "Bus Damri Jotes",
-          platDamri: "Plat : D 0000 JRD",
-          jalurDamri: "Jalur : Pungkur - Pasir Kaliki",
-          jamOperasional: "Jam Operasional : 07.00 - 17.00 WIB",
-        ),
-        ScheduleCard(
-          icon: "assets/icons/damri.png",
-          namaDamri: "Bus Damri Aqsa",
-          platDamri: "Plat : D 0000 AQS",
-          jalurDamri: "Jalur : Lembang - Lebakgede",
-          jamOperasional: "Jam Operasional : 09.00 - 17.00 WIB",
-        ),
-      ],
     );
   }
  }

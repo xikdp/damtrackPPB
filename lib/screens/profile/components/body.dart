@@ -33,6 +33,7 @@ class Body extends StatelessWidget {
     );
   }
   _fetch() async {
+
       final firebaseUser = FirebaseAuth.instance.currentUser!;
       if (firebaseUser != null) {
         await FirebaseFirestore.instance
@@ -60,7 +61,7 @@ class Body extends StatelessWidget {
         future: _fetch(),
         builder: (context, snapshot){
           if (snapshot.connectionState != ConnectionState.done)
-            return Text('Loading data collections');
+            return Center(child: CircularProgressIndicator());
           final TextEditingController nameController =
             TextEditingController(text: "$myName");
           final TextEditingController phoneController =
