@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'halte_information_card.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class halte_information_content extends StatelessWidget {
   const halte_information_content({
@@ -9,50 +12,30 @@ class halte_information_content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-        children: <Widget>[
-          halte_information_card(
-            icon: "assets/icons/getonbus.png",
-            title: "Halte Leuwi Panjang",
-            subtitle1: "Jalan Leuwi Panjang",
-            subtitle2: "Situsaeur, Kec. Bojongloa Kidul, Kota Bandung, Jawa Barat",
-          ),
+    return Scaffold (
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('halte').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if(!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-          halte_information_card(
-            icon: "assets/icons/getonbus.png",
-            title: "Halte Damri Cibiru",
-            subtitle1: "Kebon Kalapa",
-            subtitle2: "Cipadung Wetan, Kec. Panyileukan, Kota Bandung, Jawa Barat",
-          ),
-
-          halte_information_card(
-            icon: "assets/icons/getonbus.png",
-            title: "Halte Leuwi Panjang",
-            subtitle1: "Jalan Leuwi Panjang",
-            subtitle2: "Situsaeur, Kec. Bojongloa Kidul, Kota Bandung, Jawa Barat",
-          ),
-
-          halte_information_card(
-            icon: "assets/icons/getonbus.png",
-            title: "Halte Damri Kebon Kalapa",
-            subtitle1: "Tanjungsari",
-            subtitle2: "Pungkur, Kec. Regol, Kota Bandung, Jawa Barat",
-          ),
-
-          halte_information_card(
-            icon: "assets/icons/getonbus.png",
-            title: "Halte Damri Kebon Kawung",
-            subtitle1: "Jl. Kebon Kawung No.20",
-            subtitle2: "Pasir Kaliki, Kec. Cicendo, Kota Bandung, Jawa Barat",
-          ),
-
-          halte_information_card(
-            icon: "assets/icons/getonbus.png",
-            title: "Halte DAMRI Dipatiukur",
-            subtitle1: "Jl. Dipati Ukur",
-            subtitle2: "Lebakgede, Kecamatan Coblong, Kota Bandung, Jawa Barat",
-          ),
-        ],
+          return ListView(
+            children: snapshot.data!.docs.map((document) {
+              return Center(
+                child: halte_information_card(
+                  icon: "assets/icons/getonbus.png", 
+                  title: "Halte ${document['namahalte']}", 
+                  subtitle1: "Titik Halte : ${document['titikhalte']}", 
+                  subtitle2: "${document['alamatlengkap']}", 
+                ),
+              );
+            }).toList(),
+          );
+        }
+        ),
     );
   }
 }

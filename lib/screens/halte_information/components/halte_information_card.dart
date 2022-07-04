@@ -23,7 +23,7 @@ class halte_information_card extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child:Container(
-                      height: 150,
+                      height: 115,
                       child: Row(
                         children: [
                           Center(

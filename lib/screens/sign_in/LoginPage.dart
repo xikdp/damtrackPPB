@@ -1,8 +1,11 @@
 import 'package:damtrack/main_page.dart';
 import 'package:damtrack/screens/home/home_screens.dart';
 import 'package:damtrack/screens/sign_up/SignUpPage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../main.dart';
 
@@ -389,10 +392,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future signIn() async {
-    showDialog(
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference users = firestore.collection('users');
+    showDialog<String>(
         context: context,
         barrierDismissible: false,
-        builder: (context) => Center(child: CircularProgressIndicator()));
+        builder: (context) => Center(child: CircularProgressIndicator())    
+    );
 
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(

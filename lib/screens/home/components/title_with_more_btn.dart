@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 class TitleWithMoreButton extends StatelessWidget {
   const TitleWithMoreButton({
     Key? key, required this.title,
@@ -19,7 +22,8 @@ class TitleWithMoreButton extends StatelessWidget {
           FlatButton(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             color: Colors.amber,
-            onPressed: () {}, 
+            // onPressed: () => FirebaseAuth.instance.signOut(), 
+            onPressed: () {},
             child: Text(
               "More",
               style: TextStyle(color: Colors.white),  

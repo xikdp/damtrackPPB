@@ -338,21 +338,21 @@ class _SignUpPageState extends State<SignUpPage> {
   Future signUp() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference users = firestore.collection('users');
+    if (PassController.text == ConfirmPassController.text) {
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: EmailController.text.trim(),
+          password: PassController.text.trim(),
+        );
+      } on FirebaseAuthException catch (e) {
+        print(e);
+      }
 
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: EmailController.text.trim(),
-        password: PassController.text.trim(),
-      );
-    } on FirebaseAuthException catch (e) {
-      print(e);
-    }
-
-    User? uidUser = FirebaseAuth.instance.currentUser;
+      User? uidUser = FirebaseAuth.instance.currentUser;
 
     
 
-    if (PassController.text == ConfirmPassController.text) {
+    
       signUp;
       await FirebaseFirestore.instance.collection("users").doc(uidUser?.uid).set({
         'name': NameController.text,
